@@ -1,4 +1,5 @@
-const employeeCtrl = require("./controllers/employeesCtrl");
+const employeesCtrl = require("./controllers/employeesCtrl");
+const usersCtrl = require("./controllers/usersCtrl");
 
 const EMPLOYEE_ID_REGEX = /\/api\/employees\/[0-9]+/;
 
@@ -13,6 +14,10 @@ function handleRoutes(req, res) {
     employeeCtrl.updateEmployee(req, res);
   } else if (req.url.match(EMPLOYEE_ID_REGEX) && req.method === "DELETE") {
     employeeCtrl.deleteEmployee(req, res);
+  } else if (req.url === "/api/login") {
+    usersCtrl.login(req, res);
+  } else if (req.url === "/api/signup") {
+    usersCtrl.signup(req, res);
   } else {
     res.writeHead(400, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: "Invalid request" }));

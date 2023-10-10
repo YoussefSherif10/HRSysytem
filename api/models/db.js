@@ -31,3 +31,4 @@ process.once("SIGINT", () => {
 });
 
 require("./employees");
+require("./users");
