@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "api to handle the HR system data",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Youssef Sherif",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^7.6.1"
+  }
+}
