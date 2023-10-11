@@ -1,0 +1,17 @@
+<main>
+  <h1>Login</h1>
+  <mat-form-field appearance="outline" style="margin-top: 2em; width: 50%">
+    <mat-label>Enter your email</mat-label>
+    <input matInput [formControl]="email" />
+  </mat-form-field>
+  <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
+  <button *ngIf="email.invalid" mat-raised-button disabled>Login</button>
+  <button
+    *ngIf="email.valid"
+    mat-raised-button
+    color="primary"
+    (click)="login()"
+  >
+    login
+  </button>
+</main>

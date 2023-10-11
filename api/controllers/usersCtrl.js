@@ -32,7 +32,7 @@ const login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    utils.successResponse(res, token);
+    utils.successResponse(res, JSON.stringify({ token }));
   } catch (error) {
     utils.failedResponse(res, "Internal server error");
   }

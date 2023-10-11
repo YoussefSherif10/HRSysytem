@@ -1,0 +1,21 @@
+.mat-elevation-z8,
+.filter {
+  width: 70% !important;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.create {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+  margin-bottom: 0.5em;
+}
