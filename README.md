@@ -1,27 +1,12 @@
 # HRSystem
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
+A full stack web application using Angular at the front end, Node (Vanilla Js) at the back end, and MongoDB to store the data.
+I used JWT for authentication.
 
-## Development server
+The project is simply an HR system to manage the employees. it gives you the ability to add, delete, update, or filter the data of the employees. only the HR employees can log in to the system.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To be able to log into the system you need another HR employee to create an email for you and assign the group to HR.
 
-## Code scaffolding
+I deployed the application so that you can see it in action here:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+you can use 'hr@hr.com' to login to the system.
