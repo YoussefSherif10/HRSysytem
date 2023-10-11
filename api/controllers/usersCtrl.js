@@ -1,27 +1,32 @@
 const mongoose = require("mongoose");
-const User = mongoose.model("User");
+const Employee = mongoose.model("Employee");
 const jwt = require("jsonwebtoken");
 const utils = require("../utils/utils");
 
 const login = async (req, res) => {
   try {
-    const { email, password } = await utils.getRequestData(req);
+    const { email } = await utils.getRequestData(req);
 
-    if (!email || !password) {
-      utils.failedResponse(res, "All fields are required");
+    if (!email) {
+      utils.failedResponse(res, "Email is required");
       return;
     }
 
-    const user = await User.findOne({ email }).exec();
+    const employee = await Employee.findOne({ email }).exec();
 
-    if (!user) {
-      utils.failedResponse(res, "User not found");
+    if (!employee) {
+      utils.failedResponse(res, "Employee not found");
+      return;
+    }
+
+    if (employee.group !== "HR") {
+      utils.failedResponse(res, "You are not in the HR group");
       return;
     }
 
     const token = jwt.sign(
       {
-        email: user.email,
+        email: employee.email,
       },
       "ThisIsSecret",
       { expiresIn: "1d" }
@@ -33,41 +38,4 @@ const login = async (req, res) => {
   }
 };
 
-const signup = async (req, res) => {
-  try {
-    const { email, password } = await utils.getRequestData(req);
-
-    if (!email || !password) {
-      utils.failedResponse(res, "All fields are required");
-      return;
-    }
-
-    const existingUser = await User.findOne({ email }).exec();
-
-    if (existingUser) {
-      utils.failedResponse(res, "User already exists");
-      return;
-    }
-
-    const newUser = new User({
-      email,
-      password,
-    });
-
-    await newUser.save();
-
-    const token = jwt.sign(
-      {
-        email: newUser.email,
-      },
-      "ThisIsSecret",
-      { expiresIn: "1d" }
-    );
-
-    utils.successResponse(res, token);
-  } catch (error) {
-    utils.failedResponse(res, "Internal server error");
-  }
-};
-
-module.exports = { login, signup };
+module.exports = { login };

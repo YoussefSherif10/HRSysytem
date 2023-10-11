@@ -16,8 +16,6 @@ function handleRoutes(req, res) {
     employeeCtrl.deleteEmployee(req, res);
   } else if (req.url === "/api/login") {
     usersCtrl.login(req, res);
-  } else if (req.url === "/api/signup") {
-    usersCtrl.signup(req, res);
   } else {
     res.writeHead(400, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: "Invalid request" }));
