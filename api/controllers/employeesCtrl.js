@@ -11,20 +11,6 @@ async function getEmployees(req, res) {
   }
 }
 
-async function getEmployeeById(req, res) {
-  const id = utils.getID(req);
-  try {
-    const employee = await Employee.findById(id);
-    if (employee) {
-      utils.successResponse(res, JSON.stringify(employee));
-    } else {
-      utils.failedResponse(res, "Employee not found");
-    }
-  } catch (error) {
-    utils.failedResponse(res, "Error retrieving employee");
-  }
-}
-
 async function createEmployee(req, res) {
   try {
     const newEmployee = await utils.getRequestData(req);
@@ -69,7 +55,6 @@ async function deleteEmployee(req, res) {
 
 module.exports = {
   getEmployees,
-  getEmployeeById,
   createEmployee,
   updateEmployee,
   deleteEmployee,

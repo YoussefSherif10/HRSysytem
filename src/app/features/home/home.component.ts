@@ -10,6 +10,9 @@ import { Employee } from "src/models/Employee";
 import { Subscription } from "rxjs";
 import { MatButtonModule } from "@angular/material/button";
 import { Router } from "@angular/router";
+import { DeleteMsgComponent } from "src/app/common/delete-msg/delete-msg.component";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { FormComponent } from "src/app/common/form/form.component";
 
 @Component({
   selector: "app-home",
@@ -22,6 +25,9 @@ import { Router } from "@angular/router";
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    DeleteMsgComponent,
+    MatDialogModule,
+    FormComponent,
   ],
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
@@ -34,7 +40,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dataService: DataService, private router: Router) {
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     const token = localStorage.getItem("token");
     if (!token) {
       this.router.navigate(["/login"]);
@@ -60,11 +70,52 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  editEmployee(id: string) {}
+  editEmployee(id: string) {
+    const dialogRef = this.dialog.open(FormComponent, {
+      width: "400px",
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dataService.updateEmployee(id, result).subscribe((updated) => {
+          this.dataSource.data = this.dataSource.data.map((employee) => {
+            if (employee._id === updated._id) {
+              return updated;
+            }
+            return employee;
+          });
+        });
+      }
+    });
+  }
 
-  deleteEmployee(id: string) {}
+  deleteEmployee(id: string) {
+    console.log(id);
+    const dialogRef = this.dialog.open(DeleteMsgComponent, {
+      width: "400px",
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dataService.deleteEmployee(id).subscribe((deleted) => {
+          this.dataSource.data = this.dataSource.data.filter(
+            (employee) => employee._id !== deleted._id
+          );
+        });
+      }
+    });
+  }
 
-  createEmployee() {}
+  createEmployee() {
+    const dialogRef = this.dialog.open(FormComponent, {
+      width: "400px",
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dataService.createEmployee(result).subscribe((created) => {
+          this.dataSource.data = [...this.dataSource.data, created];
+        });
+      }
+    });
+  }
 
   ngOnDestroy(): void {
     this.dataSubscription?.unsubscribe();
